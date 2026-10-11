@@ -1,6 +1,7 @@
 package main
 
 import (
+
 	"github.com/gdamore/tcell/v3"
 	"github.com/gdamore/tcell/v3/color"
 )
@@ -23,16 +24,17 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 
 	// we want width per height = past width + 3
 	// first loop for height, second for width
-	for i := range height {
+	for i:= range 3 {
+		for j := xmid - 1; j <= xmid + 1; j++ {
+			s.Put(j,ysize-i-1,"|",trunkStyle)
+		}
+	}
+
+	for i := height; i > 0; i-- {
 		for j := xmid - widthCount; j <= xmid + widthCount; j++ {
-			s.Put(j,i+1,"o",leafStyle)
+			s.Put(j,ysize-3-i,"o",leafStyle)
 		}
 		widthCount += 1
 	}
 
-	for i:= range 3 {
-		for j := xmid - 1; j <= xmid + 1; j++ {
-			s.Put(j,i+1+height,"|",trunkStyle)
-		}
-	}
 }
