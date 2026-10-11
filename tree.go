@@ -9,11 +9,12 @@ import (
 // max height is 18 (minus 3 (constant value, not changed with any size) from the trunk, so its 15 leaves)
 func DrawTree(xsize int, ysize int, s tcell.Screen) {
 	if xsize < 10 || ysize < 10 {
+		s.PutStr(0,0,"Screen size too small")
 		return
 	} 
 
 	leafStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.DarkGreen)
-	//trunkStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.BurlyWood
+	trunkStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.BurlyWood)
 
 	xmid := xsize/2
 	ymid := ysize/2
@@ -21,12 +22,17 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 	height := min(ymid, 15)
 
 	// we want width per height = past width + 3
-
 	// first loop for height, second for width
-	for i := 0; i < height; i++ {
+	for i := range height {
 		for j := xmid - widthCount; j <= xmid + widthCount; j++ {
 			s.Put(j,i+1,"*",leafStyle)
 		}
 		widthCount += 1
+	}
+
+	for i:= range 3 {
+		for j := xmid - 1; j <= xmid + 1; j++ {
+			s.Put(j,i+1+height,"*",trunkStyle)
+		}
 	}
 }

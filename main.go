@@ -31,12 +31,6 @@ func main() {
 	defer quit()
 
 
-	// Here's an example of how to inject a keystroke where it will
-	// be picked up by a future read of the event queue.  Note that
-	// care should be used to avoid blocking writes to the queue if
-	// this is done from the same thread that is responsible for reading
-	// the queue, or else a single-party deadlock might occur.
-	// s.EventQ() <- tcell.NewEventKey(tcell.KeyRune, rune('a'), 0)
 
 	for {
 		xmax, ymax := s.Size()
