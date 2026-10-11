@@ -48,6 +48,7 @@ func main() {
 
 		switch ev := ev.(type) {
 		case *tcell.EventResize:
+			s.Clear()
 			s.Sync()
 		case *tcell.EventKey:
 			if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC || ev.Str() == "q" || ev.Str() == "Q" {

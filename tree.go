@@ -13,11 +13,20 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 	} 
 
 	leafStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.DarkGreen)
-	//trunkStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.BurlyWood)
+	//trunkStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.BurlyWood
 
-	for i:=0;i<3;i++ {
-		s.Put(i,i,"*",leafStyle)
+	xmid := xsize/2
+	ymid := ysize/2
+	widthCount := 0
+	height := min(ymid, 15)
+
+	// we want width per height = past width + 3
+
+	// first loop for height, second for width
+	for i := 0; i < height; i++ {
+		for j := xmid - widthCount; j <= xmid + widthCount; j++ {
+			s.Put(j,i+1,"*",leafStyle)
+		}
+		widthCount += 1
 	}
-
-
 }
