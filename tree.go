@@ -25,14 +25,14 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 	// first loop for height, second for width
 	for i := range height {
 		for j := xmid - widthCount; j <= xmid + widthCount; j++ {
-			s.Put(j,i+1,"*",leafStyle)
+			s.Put(j,i+1,"o",leafStyle)
 		}
 		widthCount += 1
 	}
 
 	for i:= range 3 {
 		for j := xmid - 1; j <= xmid + 1; j++ {
-			s.Put(j,i+1+height,"*",trunkStyle)
+			s.Put(j,i+1+height,"|",trunkStyle)
 		}
 	}
 }

@@ -9,7 +9,6 @@ import (
 
 func main() {
 	defStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.Reset)
-
 	s, err := tcell.NewScreen()
 	if err != nil {
 		log.Fatalf("%+v", err)
@@ -30,10 +29,13 @@ func main() {
 	}
 	defer quit()
 
-
+	var flakes []Snowflake
 
 	for {
 		xmax, ymax := s.Size()
+		flakes = CreateSnow(flakes, xmax)
+		UpdateSnow(flakes, ymax, s)
+		DrawSnow(flakes, s)
 		DrawTree(xmax, ymax, s)
 
 		s.Show()
