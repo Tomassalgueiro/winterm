@@ -1,7 +1,9 @@
-package main 
+package main
 
 import (
 	"log"
+	"time"
+
 	"github.com/gdamore/tcell/v3"
 	"github.com/gdamore/tcell/v3/color"
 )
@@ -29,27 +31,35 @@ func main() {
 	}
 	defer quit()
 
+	ticker := time.NewTicker(time.Millisecond * 100)
+	defer ticker.Stop()
+
+	running := true
 	var flakes []Snowflake
 
-	for {
-		xmax, ymax := s.Size()
-		flakes = CreateSnow(flakes, xmax)
-		flakes = UpdateSnow(flakes, xmax, ymax)
-		DrawSnow(flakes, s)
-		DrawTree(xmax, ymax, s)
+	for running {
+		select {
 
-		s.Show()
+		case <- ticker.C:
+			xmax, ymax := s.Size()
+			flakes = CreateSnow(flakes, xmax)
+			flakes = UpdateSnow(flakes, xmax, ymax)
+			DrawSnow(flakes, s)
 
-		ev := <-s.EventQ()
+			DrawTree(xmax, ymax, s)
+			s.Show()
 
-		switch ev := ev.(type) {
-		case *tcell.EventResize:
-			s.Clear()
-			s.Sync()
-		case *tcell.EventKey:
-			if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC || ev.Str() == "q" || ev.Str() == "Q" {
-				return
+		case ev := <-s.EventQ():
+			switch ev := ev.(type) {
+			case *tcell.EventResize:
+				s.Sync()
+				s.Clear()
+			case *tcell.EventKey:
+				if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC || ev.Str() == "q" || ev.Str() == "q" {
+					return
+				}
 			}
 		}
 	}
+	s.Fini()
 }

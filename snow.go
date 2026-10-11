@@ -63,7 +63,7 @@ func UpdateSnow(flakes []Snowflake, xmax int, ymax int) []Snowflake {
 	for flake := 0 ; flake < flakesSize; flake++ {
 		// 0 to go left and 1 to go right
 		movement := rand.Intn(2)
-		if flakes[flake].y == ymax - 1 {
+		if flakes[flake].y == ymax {
 			flakesSize--
 			flakes = append(flakes[:flake], flakes[flake+1:]...)
 		} else {
