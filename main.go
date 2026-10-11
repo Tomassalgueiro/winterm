@@ -34,7 +34,7 @@ func main() {
 	for {
 		xmax, ymax := s.Size()
 		flakes = CreateSnow(flakes, xmax)
-		UpdateSnow(flakes, ymax, s)
+		flakes = UpdateSnow(flakes, xmax, ymax)
 		DrawSnow(flakes, s)
 		DrawTree(xmax, ymax, s)
 
