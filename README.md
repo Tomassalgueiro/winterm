@@ -2,7 +2,7 @@
 
 A terminal holiday tree animation written in go and using tcell. Features falling snow, an ASCII evergreen tree, and customizable colored lights grouped together in twinkling triplets.
 
-![winterm demo](assets/demo.gif)
+![winterm demo](assets-for-readme/demo.gif)
 
 ---
 
