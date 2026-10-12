@@ -6,6 +6,8 @@ import (
 	"github.com/gdamore/tcell/v3/color"
 )
 
+
+
 // draws a tree (with trunk in the middle of the screen, trunk is ALWAYS three wide)
 // max height is 18 (minus 3 (constant value, not changed with any size) from the trunk, so its 15 leaves)
 func DrawTree(xsize int, ysize int, s tcell.Screen) {
@@ -15,11 +17,12 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 	} 
 
 	leafStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.DarkGreen)
+	starStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.Yellow)
 	trunkStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.BurlyWood)
 
 	xmid := xsize/2
 	ymid := ysize/2
-	widthCount := 0
+	widthCount := 1
 	height := min(ymid, 15)
 
 	// we want width per height = past width + 3
@@ -30,7 +33,8 @@ func DrawTree(xsize int, ysize int, s tcell.Screen) {
 		}
 	}
 
-	for i := height; i > 0; i-- {
+	s.Put(xmid - widthCount + 1,ysize-3-height,"★",starStyle)
+	for i := height - 1; i > 0; i-- {
 		for j := xmid - widthCount; j <= xmid + widthCount; j++ {
 			s.Put(j,ysize-3-i,"o",leafStyle)
 		}

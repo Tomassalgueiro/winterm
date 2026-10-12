@@ -47,6 +47,7 @@ func main() {
 			DrawSnow(flakes, s)
 
 			DrawTree(xmax, ymax, s)
+
 			s.Show()
 
 		case ev := <-s.EventQ():
