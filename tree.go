@@ -7,7 +7,6 @@ import (
 )
 
 
-
 // draws a tree (with trunk in the middle of the screen, trunk is ALWAYS three wide)
 // max height is 18 (minus 3 (constant value, not changed with any size) from the trunk, so its 15 leaves)
 func DrawTree(xsize int, ysize int, s tcell.Screen) {
