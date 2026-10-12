@@ -37,7 +37,7 @@ func main() {
 	running := true
 	var flakes []Snowflake
 	var lights []Light
-
+	countUpdate := 0
 
 	for running {
 		select {
@@ -50,8 +50,18 @@ func main() {
 
 			DrawTree(xmax, ymax, s)
 
-			lights = CreateLights(xmax, ymax) 
-			DrawLights(lights, s)
+			switch countUpdate {
+				case 0:
+					lights = CreateLights(xmax, ymax) 
+					DrawLightsUpdate(lights, s)
+					countUpdate++
+				case 3:
+					DrawLightsNoUpdate(lights, s)
+					countUpdate = 0
+				default:
+					DrawLightsNoUpdate(lights, s)
+					countUpdate++
+				}
 
 
 			s.Show()

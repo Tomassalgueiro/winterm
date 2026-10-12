@@ -50,16 +50,20 @@ func CreateLights(xsize int, ysize int) []Light {
 	return lights
 }
 
-func DrawLights(lights []Light, s tcell.Screen) {
+func DrawLightsUpdate(lights []Light, s tcell.Screen) {
 
 	for light := range lights {
 		num := rand.Intn(8)
 		lightStyle := tcell.StyleDefault.Background(color.Reset).Foreground(colors[num])
+		lights[light].color = colors[num]
 		s.Put(lights[light].x, lights[light].y, "o", lightStyle)
 	}
-
 }
 
-func UpdateLights(lights []Light, s tcell.Screen) {
+func DrawLightsNoUpdate(lights []Light, s tcell.Screen) {
 
+	for light := range lights {
+		lightStyle := tcell.StyleDefault.Background(color.Reset).Foreground(lights[light].color)
+		s.Put(lights[light].x, lights[light].y, "o", lightStyle)
+	}
 }
