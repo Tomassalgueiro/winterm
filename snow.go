@@ -15,14 +15,14 @@ type Snowflake struct {
 }
 
 func CreateSnow(flakes []Snowflake, xmax int) []Snowflake {
-	if len(flakes) >= 30 {
+	if len(flakes) >= 50 {
 		return flakes
 	}
 
 	num := rand.Intn(3)
 
 	for range num {
-		if len(flakes) >= 30 {
+		if len(flakes) >= 50 {
 			break
 		}
 
