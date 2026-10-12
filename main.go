@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"time"
 
@@ -10,6 +11,12 @@ import (
 
 
 func main() {
+
+	themeFlag := flag.String("theme", "classic", "Light color theme (classic, neon, frozen, warm, berry, all)")
+	flag.Parse()
+
+	SetTheme(*themeFlag)
+
 	defStyle := tcell.StyleDefault.Background(color.Reset).Foreground(color.Reset)
 	s, err := tcell.NewScreen()
 	if err != nil {

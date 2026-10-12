@@ -13,7 +13,63 @@ type Light struct {
 	groupID int 
 }
 
-var colors = []tcell.Color{color.Red, color.White, color.Purple, color.Orange, color.Yellow, color.Blue, color.Green, color.BlueViolet}
+var ColorThemes = map[string][]tcell.Color{
+	"classic": {
+		color.Red,
+		color.Gold,
+		color.White,
+		color.LimeGreen,
+		color.DarkOrange,
+	},
+	"neon": {
+		color.DeepPink,
+		color.Aqua,
+		color.Lime,
+		color.Chartreuse,
+		color.HotPink,
+	},
+	"frozen": {
+		color.DeepSkyBlue,
+		color.DodgerBlue,
+		color.LightCyan,
+		color.White,
+		color.GhostWhite,
+		color.Turquoise,
+	},
+	"warm": {
+		color.OrangeRed,
+		color.Coral,
+		color.DarkOrange,
+		color.Orange,
+		color.Gold,
+		color.Yellow,
+	},
+	"berry": {
+		color.Crimson,
+		color.DeepPink,
+		color.DarkViolet,
+		color.Purple,
+		color.BlueViolet,
+		color.MediumVioletRed,
+	},
+	"all": {
+		color.Red, color.Crimson, color.OrangeRed, color.Coral, color.DarkOrange,
+		color.Orange, color.Gold, color.Yellow, color.DeepPink, color.HotPink,
+		color.Fuchsia, color.Purple, color.DarkViolet, color.BlueViolet,
+		color.DodgerBlue, color.DeepSkyBlue, color.RoyalBlue, color.Aqua,
+		color.Lime, color.LimeGreen, color.White,
+	},
+}
+
+var ActiveColors = ColorThemes["classic"]
+
+func SetTheme(name string) {
+	if selected, ok := ColorThemes[name]; ok {
+		ActiveColors = selected
+	} else {
+		ActiveColors = ColorThemes["classic"]
+	}
+}
 
 func CreateLights(xsize int, ysize int) []Light {
 
@@ -62,7 +118,7 @@ func DrawLightsUpdate(lights []Light, s tcell.Screen) {
 		gid := lights[i].groupID
 		c, exists := groupColors[gid]
 		if !exists {
-			c = colors[rand.Intn(len(colors))]
+			c = ActiveColors[rand.Intn(len(ActiveColors))]
 			groupColors[gid] = c
 		}
 
