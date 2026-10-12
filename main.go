@@ -38,6 +38,7 @@ func main() {
 	var flakes []Snowflake
 	var lights []Light
 
+
 	for running {
 		select {
 
@@ -50,7 +51,6 @@ func main() {
 			DrawTree(xmax, ymax, s)
 
 			lights = CreateLights(xmax, ymax) 
-			lights = UpdateLights(lights, xmax, ymax)
 			DrawLights(lights, s)
 
 
