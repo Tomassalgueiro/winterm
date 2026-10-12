@@ -10,6 +10,7 @@ type Light struct {
 	x int
 	y int 
 	color tcell.Color
+	groupID int 
 }
 
 var colors = []tcell.Color{color.Red, color.White, color.Purple, color.Orange, color.Yellow, color.Blue, color.Green, color.BlueViolet}
@@ -21,26 +22,29 @@ func CreateLights(xsize int, ysize int) []Light {
 	xmid := xsize / 2
 	ymid := ysize / 2
 	height := min(ymid, 15)
-
 	widthCount := 1
+	currentGroupID := 0
 
 	for i := height - 1; i > 0; i-- {
 		y := ysize - 3 - i
 		left := xmid - widthCount
 		width := 2*widthCount + 1
-
 		row := height - 1 - i
-		if row >= 2 {
-			offset := (row - 2) * 3
 
-			for pos := range width {
-				if (pos+offset)%7 < 3 {
+		if row >= 2 {
+			startPos := (row * 2) % 4 
+
+			for pos := startPos; pos+2 < width; pos += 6  {
+				for offset := range 3 {
 					lights = append(lights, Light{
-						x:     left + pos,
+						x:     left + pos + offset,
 						y:     y,
 						color: color.Red,
+						groupID: currentGroupID,
 					})
 				}
+				currentGroupID++
+				
 			}
 		}
 
@@ -52,11 +56,19 @@ func CreateLights(xsize int, ysize int) []Light {
 
 func DrawLightsUpdate(lights []Light, s tcell.Screen) {
 
-	for light := range lights {
-		num := rand.Intn(8)
-		lightStyle := tcell.StyleDefault.Background(color.Reset).Foreground(colors[num])
-		lights[light].color = colors[num]
-		s.Put(lights[light].x, lights[light].y, "o", lightStyle)
+	groupColors := make(map[int]tcell.Color)
+
+	for i := range lights {
+		gid := lights[i].groupID
+		c, exists := groupColors[gid]
+		if !exists {
+			c = colors[rand.Intn(len(colors))]
+			groupColors[gid] = c
+		}
+
+		lights[i].color = c
+		lightStyle := tcell.StyleDefault.Background(color.Reset).Foreground(c)
+		s.Put(lights[i].x, lights[i].y, "o", lightStyle)
 	}
 }
 

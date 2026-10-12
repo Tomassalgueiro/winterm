@@ -39,6 +39,10 @@ func main() {
 	var lights []Light
 	countUpdate := 0
 
+	
+	xmax, ymax := s.Size()
+	lights = CreateLights(xmax, ymax)
+
 	for running {
 		select {
 
@@ -52,7 +56,6 @@ func main() {
 
 			switch countUpdate {
 				case 0:
-					lights = CreateLights(xmax, ymax) 
 					DrawLightsUpdate(lights, s)
 					countUpdate++
 				case 3:
@@ -71,6 +74,8 @@ func main() {
 			case *tcell.EventResize:
 				s.Sync()
 				s.Clear()
+				xmax, ymax = s.Size()
+				lights = CreateLights(xmax, ymax)
 			case *tcell.EventKey:
 				if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC || ev.Str() == "q" || ev.Str() == "q" {
 					return
